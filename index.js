@@ -3,6 +3,7 @@ import os from 'os';
 import { sep } from 'path';
 import { readdir } from 'fs/promises';
 import handleOs from './src/os.js';
+import calculateHash from './src/hash.js';
 
 const startApp = async () => {
     const userName = String(argv.slice(2))
@@ -13,7 +14,8 @@ const startApp = async () => {
     let pathToHomeDirectory;
     pathToHomeDirectory = os.homedir();
 
-    console.log(`Welcome to the File Manager, ${userName}!`);
+    if (userName) console.log(`Welcome to the File Manager, ${userName}!`);
+    else console.log(`Welcome to the File Manager, Anonymous!`);
     console.log(`You are currently in ${pathToHomeDirectory}`);
 
     const readStream = process.stdin;
@@ -50,6 +52,8 @@ const startApp = async () => {
         } else if (chunkStringified.startsWith('os')) {
             handleOs(chunkStringified);
             console.log(`You are currently in ${pathToHomeDirectory}`);
+        } else if (chunkStringified.startsWith('hash')) {
+            calculateHash(chunkStringified, pathToHomeDirectory);
         }
     };
     readStream.on('data', echoInput);
@@ -57,10 +61,14 @@ const startApp = async () => {
         process.exit();
     })
     process.on('exit', code => {
-        if (code === 0)
+        if (code === 0 && userName)
             console.log(
                 `Thank you for using File Manager, ${userName}, goodbye!`
             );
+        else if (code === 0)
+            console.log(
+                `Thank you for using File Manager, Anonymous, goodbye!`
+            );  
         else
             throw Error(`App exited with code ${code}\n`);
     })
