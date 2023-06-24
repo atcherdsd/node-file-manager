@@ -1,4 +1,3 @@
-import { fileURLToPath } from 'url';
 import path from 'path';
 import { readFile } from 'fs/promises';
 import { createHash } from 'crypto';
