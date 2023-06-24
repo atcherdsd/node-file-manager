@@ -2,6 +2,7 @@ import { argv } from 'process';
 import os from 'os';
 import { sep } from 'path';
 import { readdir } from 'fs/promises';
+import handleOs from './src/os.js';
 
 const startApp = async () => {
     const userName = String(argv.slice(2))
@@ -45,6 +46,9 @@ const startApp = async () => {
             }
             const output = (dirArray.sort()).concat(filesArray.sort());
             console.table(output);
+            console.log(`You are currently in ${pathToHomeDirectory}`);
+        } else if (chunkStringified.startsWith('os')) {
+            handleOs(chunkStringified);
             console.log(`You are currently in ${pathToHomeDirectory}`);
         }
     };
