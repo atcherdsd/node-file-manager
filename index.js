@@ -50,8 +50,7 @@ const startApp = async () => {
             console.table(output);
             console.log(`You are currently in ${pathToHomeDirectory}`);
         } else if (chunkStringified.startsWith('os')) {
-            handleOs(chunkStringified);
-            console.log(`You are currently in ${pathToHomeDirectory}`);
+            handleOs(chunkStringified, pathToHomeDirectory);
         } else if (chunkStringified.startsWith('hash')) {
             calculateHash(chunkStringified, pathToHomeDirectory);
         }
