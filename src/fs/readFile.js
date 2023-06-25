@@ -12,7 +12,7 @@ const readFile = async (consoleData, pathToHomeDir) => {
         content += chunk.toString();
     });
     readStream.on('end', () => {
-        process.stdout.write(content);
+        process.stdout.write(content + '\n');
         console.log(`You are currently in ${pathToHomeDir}`);
     });   
     readStream.on('error', () => console.error('Operation failed'));

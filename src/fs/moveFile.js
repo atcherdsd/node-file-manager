@@ -1,20 +1,21 @@
 import path from 'path';
 import { createReadStream, createWriteStream } from 'fs';
-import { access } from 'fs/promises';
+import { access, rm } from 'fs/promises';
 
-const copyFile = async (consoleData, pathToHomeDir) => {
+const moveFile = async (consoleData, pathToHomeDir) => {
     try {
         const fileName = consoleData.split(' ').splice(1, 1).toString();
-    
+
         const pathToFile = path.resolve(
-            pathToHomeDir, fileName
+            pathToHomeDir, 
+            fileName
         );
         const pathToDestination = path.resolve(
             pathToHomeDir, 
             consoleData.split(' ').splice(2).toString(),
             fileName
         );
-        
+
         await access(pathToFile);
         const readStream = createReadStream(pathToFile);
         const writeStream = createWriteStream(pathToDestination);
@@ -25,13 +26,21 @@ const copyFile = async (consoleData, pathToHomeDir) => {
         });
         readStream.on('end', () => {
             writeStream.write(content);
-        });   
+        });
         readStream.on('error', () => console.error('Operation failed'));
         writeStream.on('error', () => console.error('Operation failed'));
+
+        readStream.on('close', async () => {
+            try {
+                await rm(pathToFile, { recursive: true });
+            } catch {
+                console.error('Operation failed');
+            }
+        })
         console.log(`You are currently in ${pathToHomeDir}`);
     } catch {
         console.error('Operation failed');
-    }    
+    }
 };
 
-export default copyFile;
+export default moveFile;

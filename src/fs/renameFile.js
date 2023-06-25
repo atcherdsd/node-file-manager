@@ -1,5 +1,5 @@
 import path from 'path';
-import { access, rename, stat } from 'fs/promises';
+import { access, rename } from 'fs/promises';
 
 const renameFile = async (consoleData, pathToHomeDir) => {
     try {

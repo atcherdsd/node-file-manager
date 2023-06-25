@@ -6,12 +6,13 @@ import compressFile from './src/compress.js';
 import decompressFile from './src/decompress.js';
 import goUp from './src/goUp.js';
 import changeDir from './src/cd.js';
+import list from './src/list.js';
 import readFile from './src/fs/readFile.js';
 import createFile from './src/fs/createFile.js';
 import renameFile from './src/fs/renameFile.js';
 import deleteFile from './src/fs/deleteFile.js';
 import copyFile from './src/fs/copyFile.js';
-import list from './src/list.js';
+import moveFile from './src/fs/moveFile.js';
 
 const startApp = async () => {
     const userName = String(argv.slice(2))
@@ -59,6 +60,8 @@ const startApp = async () => {
             await deleteFile(chunkStringified, pathToHomeDirectory);
         } else if (chunkStringified.startsWith('cp ')) {
             await copyFile(chunkStringified, pathToHomeDirectory);
+        } else if (chunkStringified.startsWith('mv ')) {
+            await moveFile(chunkStringified, pathToHomeDirectory);
         } else {
             console.log('Invalid input');
         }

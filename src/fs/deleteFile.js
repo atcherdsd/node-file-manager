@@ -8,7 +8,7 @@ const deleteFile = async (consoleData, pathToHomeDir) => {
             consoleData.split(' ').slice(1).toString()
         );
     
-        await rm(pathToFile, {recursive: true });
+        await rm(pathToFile, { recursive: true });
         console.log(`You are currently in ${pathToHomeDir}`);
     } catch {
         console.error('Operation failed');
