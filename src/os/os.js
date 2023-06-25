@@ -1,9 +1,10 @@
 import os from 'os';
+import commandList from '../utils/commandList';
 
 const handleOs = async (consoleData, pathToHomeDir) => {
     try {
         switch(consoleData) {
-        case 'os --EOL':
+        case commandList.osEOL:
             if (os.EOL === '\r\n') {
                 console.log('\\r\\n');
             } else if (os.EOL === '\n') {
@@ -11,7 +12,7 @@ const handleOs = async (consoleData, pathToHomeDir) => {
             }
             console.log(`You are currently in ${pathToHomeDir}`);
             break;
-        case 'os --cpus':
+        case commandList.osCPUs:
             const cpuAmount = os.cpus().length;
             const cpuInfo = os.cpus().map(elem => { 
                 return {
@@ -23,16 +24,16 @@ const handleOs = async (consoleData, pathToHomeDir) => {
             console.log('CPU Info: ', cpuInfo);
             console.log(`You are currently in ${pathToHomeDir}`);
             break;
-        case 'os --homedir':
+        case commandList.osHomedir:
             console.log(os.homedir());
             console.log(`You are currently in ${pathToHomeDir}`);
             break;
-        case 'os --username':
+        case commandList.osUserName:
             const userName = os.userInfo().username;
             console.log(userName);
             console.log(`You are currently in ${pathToHomeDir}`);
             break;
-        case 'os --architecture':
+        case commandList.osArchitect:
             console.log(process.arch);
             console.log(`You are currently in ${pathToHomeDir}`);
             break;

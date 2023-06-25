@@ -13,6 +13,7 @@ import renameFile from './src/fs/renameFile.js';
 import deleteFile from './src/fs/deleteFile.js';
 import copyFile from './src/fs/copyFile.js';
 import moveFile from './src/fs/moveFile.js';
+import commandList from './src/utils/commandList.js';
 
 const startApp = async () => {
     const userName = String(argv.slice(2))
@@ -31,36 +32,36 @@ const startApp = async () => {
 
     const echoInput = async (chunk) => {
         const chunkStringified = chunk.toString().trim();
-        if (chunkStringified === '.exit')
+        if (chunkStringified === commandList.exit)
             process.exit(0);
-        else if (chunkStringified === 'up') {
+        else if (chunkStringified === commandList.up) {
             pathToHomeDirectory = await goUp(pathToHomeDirectory);
-        } else if (chunkStringified === 'cd') {
+        } else if (chunkStringified === commandList.cd) {
             pathToHomeDirectory = os.homedir();
             console.log(`You are currently in ${pathToHomeDirectory}`);
-        } else if (chunkStringified.startsWith('cd ')) {
+        } else if (chunkStringified.startsWith(commandList.cdSpace)) {
             pathToHomeDirectory = await changeDir(chunkStringified, pathToHomeDirectory);
-        } else if (chunkStringified === 'ls') {
+        } else if (chunkStringified === commandList.ls) {
             await list(pathToHomeDirectory);
-        } else if (chunkStringified.startsWith('os')) {
+        } else if (chunkStringified.startsWith(commandList.os)) {
             await handleOs(chunkStringified, pathToHomeDirectory);
-        } else if (chunkStringified.startsWith('hash ')) {
+        } else if (chunkStringified.startsWith(commandList.hash)) {
             await calculateHash(chunkStringified, pathToHomeDirectory);
-        } else if (chunkStringified.startsWith('compress ')) {
+        } else if (chunkStringified.startsWith(commandList.compress)) {
             await compressFile(chunkStringified, pathToHomeDirectory);
-        } else if (chunkStringified.startsWith('decompress ')) {
+        } else if (chunkStringified.startsWith(commandList.decompress)) {
             await decompressFile(chunkStringified, pathToHomeDirectory);
-        } else if (chunkStringified.startsWith('cat ')) {
+        } else if (chunkStringified.startsWith(commandList.cat)) {
             await readFile(chunkStringified, pathToHomeDirectory);
-        } else if (chunkStringified.startsWith('add ')) {
+        } else if (chunkStringified.startsWith(commandList.add)) {
             await createFile(chunkStringified, pathToHomeDirectory);
-        } else if (chunkStringified.startsWith('rn ')) {
+        } else if (chunkStringified.startsWith(commandList.rn)) {
             await renameFile(chunkStringified, pathToHomeDirectory);
-        } else if (chunkStringified.startsWith('rm ')) {
+        } else if (chunkStringified.startsWith(commandList.rm)) {
             await deleteFile(chunkStringified, pathToHomeDirectory);
-        } else if (chunkStringified.startsWith('cp ')) {
+        } else if (chunkStringified.startsWith(commandList.cp)) {
             await copyFile(chunkStringified, pathToHomeDirectory);
-        } else if (chunkStringified.startsWith('mv ')) {
+        } else if (chunkStringified.startsWith(commandList.mv)) {
             await moveFile(chunkStringified, pathToHomeDirectory);
         } else {
             console.log('Invalid input');
