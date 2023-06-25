@@ -8,6 +8,7 @@ import compressFile from './src/compress.js';
 import decompressFile from './src/decompress.js';
 import changeDir from './src/cd.js';
 import readFile from './src/fs/readFile.js';
+import createFile from './src/fs/createFile.js';
 
 const startApp = async () => {
     const userName = String(argv.slice(2))
@@ -65,6 +66,8 @@ const startApp = async () => {
             await decompressFile(chunkStringified, pathToHomeDirectory);
         } else if (chunkStringified.startsWith('cat ')) {
             await readFile(chunkStringified, pathToHomeDirectory);
+        } else if (chunkStringified.startsWith('add ')) {
+            await createFile(chunkStringified, pathToHomeDirectory);
         } else {
             console.log('Invalid input');
         }
