@@ -7,7 +7,7 @@ import calculateHash from './src/hash.js';
 import compressFile from './src/compress.js';
 import decompressFile from './src/decompress.js';
 import changeDir from './src/cd.js';
-// import path from 'path';
+import readFile from './src/fs/readFile.js';
 
 const startApp = async () => {
     const userName = String(argv.slice(2))
@@ -56,13 +56,15 @@ const startApp = async () => {
             console.table(output);
             console.log(`You are currently in ${pathToHomeDirectory}`);
         } else if (chunkStringified.startsWith('os')) {
-            handleOs(chunkStringified, pathToHomeDirectory);
+            await handleOs(chunkStringified, pathToHomeDirectory);
         } else if (chunkStringified.startsWith('hash ')) {
-            calculateHash(chunkStringified, pathToHomeDirectory);
+            await calculateHash(chunkStringified, pathToHomeDirectory);
         } else if (chunkStringified.startsWith('compress ')) {
-            compressFile(chunkStringified, pathToHomeDirectory);
+            await compressFile(chunkStringified, pathToHomeDirectory);
         } else if (chunkStringified.startsWith('decompress ')) {
-            decompressFile(chunkStringified, pathToHomeDirectory);
+            await decompressFile(chunkStringified, pathToHomeDirectory);
+        } else if (chunkStringified.startsWith('cat ')) {
+            await readFile(chunkStringified, pathToHomeDirectory);
         } else {
             console.log('Invalid input');
         }

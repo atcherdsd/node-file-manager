@@ -1,4 +1,5 @@
 import path from 'path';
+import { stat } from 'fs/promises';
 
 const changeDir = async (consoleData, pathToHomeDir) => {
     try {
@@ -8,11 +9,20 @@ const changeDir = async (consoleData, pathToHomeDir) => {
             consolePath = consolePath.replace(',', ' ').slice(1, -1);
         }
 
-        pathToHomeDir = path.resolve(pathToHomeDir, consolePath);
-        console.log(`You are currently in ${pathToHomeDir}`);
-        return pathToHomeDir;
+        const fullPathToDir = path.resolve(pathToHomeDir, consolePath);
+        const isDirectory = (await stat(fullPathToDir)).isDirectory();
+        
+        if (isDirectory) {
+            
+            pathToHomeDir = fullPathToDir;
+            console.log(`You are currently in ${pathToHomeDir}`);
+            return pathToHomeDir;
+        } else {
+            throw Error();
+        }
     } catch {
         console.error('Operation failed');
+        return pathToHomeDir;
     }
 };
 
