@@ -6,6 +6,8 @@ import handleOs from './src/os.js';
 import calculateHash from './src/hash.js';
 import compressFile from './src/compress.js';
 import decompressFile from './src/decompress.js';
+import changeDir from './src/cd.js';
+// import path from 'path';
 
 const startApp = async () => {
     const userName = String(argv.slice(2))
@@ -37,6 +39,8 @@ const startApp = async () => {
         } else if (chunkStringified === 'cd') {
             pathToHomeDirectory = os.homedir();
             console.log(`You are currently in ${pathToHomeDirectory}`);
+        } else if (chunkStringified.startsWith('cd ')) {
+            pathToHomeDirectory = await changeDir(chunkStringified, pathToHomeDirectory);
         } else if (chunkStringified === 'ls') {
             const filesArray = [];
             const dirArray = [];
