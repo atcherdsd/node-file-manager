@@ -10,6 +10,10 @@ const moveFile = async (consoleData, pathToHomeDir) => {
             pathToHomeDir, 
             fileName
         );
+        const pathToDestDir = path.resolve(
+            pathToHomeDir, 
+            consoleData.split(' ').splice(2).toString()
+        );
         const pathToDestination = path.resolve(
             pathToHomeDir, 
             consoleData.split(' ').splice(2).toString(),
@@ -17,6 +21,7 @@ const moveFile = async (consoleData, pathToHomeDir) => {
         );
 
         await access(pathToFile);
+        await access(pathToDestDir);
         const readStream = createReadStream(pathToFile);
         const writeStream = createWriteStream(pathToDestination);
 

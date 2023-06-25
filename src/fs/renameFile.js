@@ -10,7 +10,7 @@ const renameFile = async (consoleData, pathToHomeDir) => {
         const pathToRenamedFile = path.resolve(
             pathToHomeDir, 
             consoleData.split(' ').splice(2).toString()
-        );    
+        );
         let isNewFileName = true;
 
         try {

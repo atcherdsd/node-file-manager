@@ -1,5 +1,5 @@
 import os from 'os';
-import commandList from '../utils/commandList';
+import commandList from '../utils/commandList.js';
 
 const handleOs = async (consoleData, pathToHomeDir) => {
     try {

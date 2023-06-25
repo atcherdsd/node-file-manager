@@ -4,7 +4,6 @@ const commandList = {
     cd: 'cd',
     cdSpace: 'cd ',
     ls: 'ls',
-    os: 'os',
     osEOL: 'os --EOL',
     osCPUs: 'os --cpus',
     osHomedir: 'os --homedir',
@@ -20,7 +19,5 @@ const commandList = {
     cp: 'cp ',
     mv: 'mv '
 };
-
-console.log(commandList);
 
 export default commandList;
