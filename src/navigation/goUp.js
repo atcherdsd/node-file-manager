@@ -12,7 +12,6 @@ const goUp = async (pathToHomeDir) => {
     } catch {
         console.error('Operation failed');
     }
-    
 };
 
 export default goUp;

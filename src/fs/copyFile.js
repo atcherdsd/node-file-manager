@@ -7,8 +7,13 @@ const copyFile = async (consoleData, pathToHomeDir) => {
         const fileName = consoleData.split(' ').splice(1, 1).toString();
     
         const pathToFile = path.resolve(
-            pathToHomeDir, fileName
+            pathToHomeDir, 
+            fileName
         );
+        const consolePathToDir = consoleData.split(' ').slice(2).toString();
+        if (!consolePathToDir) 
+            throw Error();
+        
         const pathToDestination = path.resolve(
             pathToHomeDir, 
             consoleData.split(' ').splice(2).toString(),
