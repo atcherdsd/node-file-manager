@@ -1,6 +1,5 @@
 import { argv } from 'process';
 import os from 'os';
-import { readdir } from 'fs/promises';
 import handleOs from './src/os.js';
 import calculateHash from './src/hash.js';
 import compressFile from './src/compress.js';
@@ -12,6 +11,7 @@ import createFile from './src/fs/createFile.js';
 import renameFile from './src/fs/renameFile.js';
 import deleteFile from './src/fs/deleteFile.js';
 import copyFile from './src/fs/copyFile.js';
+import list from './src/list.js';
 
 const startApp = async () => {
     const userName = String(argv.slice(2))
@@ -40,19 +40,7 @@ const startApp = async () => {
         } else if (chunkStringified.startsWith('cd ')) {
             pathToHomeDirectory = await changeDir(chunkStringified, pathToHomeDirectory);
         } else if (chunkStringified === 'ls') {
-            const filesArray = [];
-            const dirArray = [];
-            const direntObjectsArray = await readdir(
-                pathToHomeDirectory, { withFileTypes: true }
-            );
-            for (const file of direntObjectsArray) {
-                file.isFile() 
-                    ? filesArray.push({ 'Name': file.name, 'Type': 'file' }) 
-                    : dirArray.push({ 'Name': file.name, 'Type': 'directory' });
-            }
-            const output = (dirArray.sort()).concat(filesArray.sort());
-            console.table(output);
-            console.log(`You are currently in ${pathToHomeDirectory}`);
+            await list(pathToHomeDirectory);
         } else if (chunkStringified.startsWith('os')) {
             await handleOs(chunkStringified, pathToHomeDirectory);
         } else if (chunkStringified.startsWith('hash ')) {
