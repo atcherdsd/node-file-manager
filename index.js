@@ -11,6 +11,7 @@ import readFile from './src/fs/readFile.js';
 import createFile from './src/fs/createFile.js';
 import renameFile from './src/fs/renameFile.js';
 import deleteFile from './src/fs/deleteFile.js';
+import copyFile from './src/fs/copyFile.js';
 
 const startApp = async () => {
     const userName = String(argv.slice(2))
@@ -74,6 +75,8 @@ const startApp = async () => {
             await renameFile(chunkStringified, pathToHomeDirectory);
         } else if (chunkStringified.startsWith('rm ')) {
             await deleteFile(chunkStringified, pathToHomeDirectory);
+        } else if (chunkStringified.startsWith('cp ')) {
+            await copyFile(chunkStringified, pathToHomeDirectory);
         } else {
             console.log('Invalid input');
         }
