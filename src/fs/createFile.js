@@ -5,7 +5,6 @@ const createFile = async (consoleData, pathToHomeDir) => {
     try {
         let consolePath = consoleData.split(' ').slice(1).toString();
         const fileExtension = consolePath.slice(consolePath.lastIndexOf('.'));
-        console.log('fileExtension: ', fileExtension);
 
         if ((!consolePath.includes('.') && consolePath.includes(','))
             || fileExtension.includes(','))

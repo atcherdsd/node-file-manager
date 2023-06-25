@@ -9,6 +9,8 @@ import decompressFile from './src/decompress.js';
 import changeDir from './src/cd.js';
 import readFile from './src/fs/readFile.js';
 import createFile from './src/fs/createFile.js';
+import renameFile from './src/fs/renameFile.js';
+import deleteFile from './src/fs/deleteFile.js';
 
 const startApp = async () => {
     const userName = String(argv.slice(2))
@@ -68,6 +70,10 @@ const startApp = async () => {
             await readFile(chunkStringified, pathToHomeDirectory);
         } else if (chunkStringified.startsWith('add ')) {
             await createFile(chunkStringified, pathToHomeDirectory);
+        } else if (chunkStringified.startsWith('rn ')) {
+            await renameFile(chunkStringified, pathToHomeDirectory);
+        } else if (chunkStringified.startsWith('rm ')) {
+            await deleteFile(chunkStringified, pathToHomeDirectory);
         } else {
             console.log('Invalid input');
         }
