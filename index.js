@@ -1,11 +1,11 @@
 import { argv } from 'process';
 import os from 'os';
-import { sep } from 'path';
 import { readdir } from 'fs/promises';
 import handleOs from './src/os.js';
 import calculateHash from './src/hash.js';
 import compressFile from './src/compress.js';
 import decompressFile from './src/decompress.js';
+import goUp from './src/goUp.js';
 import changeDir from './src/cd.js';
 import readFile from './src/fs/readFile.js';
 import createFile from './src/fs/createFile.js';
@@ -33,13 +33,7 @@ const startApp = async () => {
         if (chunkStringified === '.exit')
             process.exit(0);
         else if (chunkStringified === 'up') {
-            if (pathToHomeDirectory.split(sep).length > 2)
-                pathToHomeDirectory = pathToHomeDirectory.split(sep).slice(0, -1).join(sep);
-            else if (pathToHomeDirectory.split(sep).length === 2)
-                pathToHomeDirectory = pathToHomeDirectory.split(sep).slice(0, -1) + sep;
-            else if (pathToHomeDirectory.split(sep).length === 1)
-                pathToHomeDirectory = pathToHomeDirectory;
-            console.log(`You are currently in ${pathToHomeDirectory}`);
+            pathToHomeDirectory = await goUp(pathToHomeDirectory);
         } else if (chunkStringified === 'cd') {
             pathToHomeDirectory = os.homedir();
             console.log(`You are currently in ${pathToHomeDirectory}`);

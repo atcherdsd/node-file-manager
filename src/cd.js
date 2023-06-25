@@ -1,5 +1,6 @@
 import path from 'path';
 import { stat } from 'fs/promises';
+import goUp from './goUp.js';
 
 const changeDir = async (consoleData, pathToHomeDir) => {
     try {
@@ -17,6 +18,8 @@ const changeDir = async (consoleData, pathToHomeDir) => {
             pathToHomeDir = fullPathToDir;
             console.log(`You are currently in ${pathToHomeDir}`);
             return pathToHomeDir;
+        } else if (consolePath === '..') {
+            await goUp();
         } else {
             throw Error();
         }
