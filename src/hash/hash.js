@@ -4,9 +4,15 @@ import { createHash } from 'crypto';
 
 const calculateHash = async (consoleData, pathToHomeDir) => {
     try {
+        let consolePath = consoleData.split(' ').slice(1).toString();
+        if ((consolePath.startsWith('\'') && consolePath.endsWith('\''))
+            || (consolePath.startsWith('"') && consolePath.endsWith('"'))) {
+            consolePath = consolePath.replace(',', ' ').slice(1, -1);
+        }
+
         const pathToFile = path.resolve(
             pathToHomeDir, 
-            consoleData.split(' ').slice(1).toString()
+            consolePath
         );
         const data = await readFile(pathToFile, {
             encoding: 'utf8',
