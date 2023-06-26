@@ -1,12 +1,9 @@
 import path from 'path';
 import { createReadStream } from 'fs';
+import getConsolePath from '../utils/getConsolePath.js';
 
 const readFile = async (consoleData, pathToHomeDir) => {
-    let consolePath = consoleData.split(' ').slice(1).toString();
-    if ((consolePath.startsWith('\'') && consolePath.endsWith('\''))
-        || (consolePath.startsWith('"') && consolePath.endsWith('"'))) {
-        consolePath = consolePath.replace(',', ' ').slice(1, -1);
-    }
+    const consolePath = getConsolePath(consoleData);
 
     const pathToFile = path.resolve(
         pathToHomeDir, 

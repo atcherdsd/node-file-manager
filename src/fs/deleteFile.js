@@ -1,13 +1,10 @@
 import path from 'path';
 import { rm } from 'fs/promises';
+import getConsolePath from '../utils/getConsolePath.js';
 
 const deleteFile = async (consoleData, pathToHomeDir) => {
     try {
-        let consolePath = consoleData.split(' ').slice(1).toString();
-        if ((consolePath.startsWith('\'') && consolePath.endsWith('\''))
-            || (consolePath.startsWith('"') && consolePath.endsWith('"'))) {
-            consolePath = consolePath.replace(',', ' ').slice(1, -1);
-        }
+        const consolePath = getConsolePath(consoleData);
         const pathToFile = path.resolve(
             pathToHomeDir, 
             consolePath

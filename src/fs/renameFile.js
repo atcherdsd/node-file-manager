@@ -1,26 +1,10 @@
 import path from 'path';
 import { access, rename } from 'fs/promises';
+import getPaths from '../utils/getPaths.js';
 
 const renameFile = async (consoleData, pathToHomeDir) => {
     try {
-        let pathPart = consoleData
-            .split(' ').slice(1).toString().replaceAll('"', '\'');
-
-        let fileName;
-        if (pathPart.startsWith('\'')) {
-            fileName = pathPart.slice(1, pathPart.indexOf('\'', 1)).replaceAll(',', ' ');
-        } else 
-            fileName = consoleData.split(' ').splice(1, 1).toString();
-        
-        let newFileName;
-        if (pathPart.endsWith('\'')) {
-            const reversion = pathPart.split('').reverse().join('');
-            newFileName = reversion
-                .slice(1, reversion.indexOf('\'', 1))
-                .split('').reverse().join('').replaceAll(',', ' ');
-        } else {
-            newFileName = consoleData.split(' ').slice(-1).toString();
-        }
+        const { fileName, pathToDir: newFileName } = getPaths(consoleData);
 
         const pathToFileToRename = path.resolve(
             pathToHomeDir, 

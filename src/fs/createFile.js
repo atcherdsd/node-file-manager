@@ -1,15 +1,12 @@
 import { open, writeFile } from 'fs/promises';
 import path from 'path';
+import getConsolePath from '../utils/getConsolePath.js';
 
 const createFile = async (consoleData, pathToHomeDir) => {
     let filehandle;
     try {
-        let consolePath = consoleData.split(' ').slice(1).toString();
-        if ((consolePath.startsWith('\'') && consolePath.endsWith('\''))
-            || (consolePath.startsWith('"') && consolePath.endsWith('"'))) {
-            consolePath = consolePath.replace(',', ' ').slice(1, -1);
-        }
-        console.log(consolePath);
+        const consolePath = getConsolePath(consoleData);
+
         const fileExtension = consolePath.slice(consolePath.lastIndexOf('.'));
         if ((!consolePath.includes('.') && consolePath.includes(','))
             || fileExtension.includes(','))
